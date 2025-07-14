@@ -1,0 +1,10 @@
+import os
+
+def write_file(working_directory, file_path, content):
+    working_path = os.path.abspath(working_directory)
+    file_to_write_path = os.path.abspath(os.path.join(working_directory, file_path))
+    check_for_common_path = os.path.commonpath([working_path, file_to_write_path])
+    if check_for_common_path != working_path:
+        return f'Error: Cannot write to "{file_path}" as it is outside the permitted working directory'
+    elif check_for_common_path == working_path:
+        
