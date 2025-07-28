@@ -6,5 +6,10 @@ def write_file(working_directory, file_path, content):
     check_for_common_path = os.path.commonpath([working_path, file_to_write_path])
     if check_for_common_path != working_path:
         return f'Error: Cannot write to "{file_path}" as it is outside the permitted working directory'
-    if os.path.exists(file_to_write_path) == True:
-        
+    try:
+        os.makedirs(os.path.dirname(file_to_write_path), exist_ok=True)
+        with open(file_to_write_path, "w") as f:
+            f.write(content)
+        return f'Successfully wrote to "{file_path}" ({len(content)} characters written)'
+    except Exception as exc:
+        return f"Error writing to file {file_path}: {exc}"
